@@ -13,7 +13,7 @@ i18n
 .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     fallbackLng: appConfig.defaultLanguage, // default language in i18n if no language is detected
-    debug: true, // console.log
+    debug: false, // console.log
     interpolation: {
       escapeValue: false // react already safes from xss
     }

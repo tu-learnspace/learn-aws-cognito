@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import useHooks from './hooks';
 
@@ -18,12 +17,6 @@ const SvgIcon = ({ name, rest, className }) => {
     );
   }
   return null;
-};
-
-SvgIcon.propTypes = {
-  name: PropTypes.string,
-  rest: PropTypes.any,
-  className: PropTypes.string
 };
 
 export default SvgIcon;

@@ -1,42 +1,40 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { authRoutes } from 'routes';
 import Header from 'components/Header';
-import Unauthorized from 'containers/Unauthorized';
 import ErrorPageNotFound from 'components/PageNotFound';
-import { Route, Switch } from 'react-router-dom';
+import Unauthorized from 'containers/Unauthorized';
+import LogOutButton from 'containers/AuthenticatedPage/LogOutButton';
+import { selectCurrentUser } from 'containers/App/selectors';
 
 import useHooks from './hooks';
 
+
 const AuthenticatedPage = () => {
-  const isAuthenticated = true;
+  const isAuthorized = true;
+  const { name, email } = useSelector(selectCurrentUser);
   const { headerName } = useHooks();
   const { t } = useTranslation();
 
   return (
     <>
-      {isAuthenticated && (
+      {isAuthorized && (
         <>
-          {/*<Sidebar/>*/}
-          { headerName && <Header headerName={t(headerName)}/> }
+          { headerName && <Header headerName={t(headerName)} userName={name + ' ' + email} children={<LogOutButton/>}/> }
           <Switch>
-            {authRoutes.map((route) => {
-              const { path, exact, component } = route;
+            {authRoutes.map(({ path, exact, component }) => {
               return (
-                <Route
-                  key={path}
-                  path={path}
-                  exact={exact}
-                  component={component}
-                />
+                <Route key={path} path={path} exact={exact} component={component}/>
               );
             })}
             <Route path='' component={ErrorPageNotFound} />
           </Switch>
         </>
       )}
-      {!isAuthenticated && (<><Unauthorized /></>)}
+      {!isAuthorized && (<><Unauthorized /></>)}
     </>
   );
 };

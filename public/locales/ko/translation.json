@@ -3,5 +3,7 @@
   "greeting": "src/Index.js 를 편집하고 저장하여 다시 로드",
   "learnReact": "React 배우다",
   "pageNotFoundMessage": "페이지를 찾을 수 없습니다.",
-  "homePage": "홈페이지"
+  "homePage": "홈페이지",
+  "logOut": "로그 아웃",
+  "logIn": "로그인"
 }
