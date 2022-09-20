@@ -4,6 +4,10 @@
   "learnReact": "Learn React",
   "pageNotFoundMessage": "Page Not Found.",
   "homePage": "HOME PAGE",
-  "logOut": "LOG OUT",
-  "logIn": "LOG IN"
+  "signOut": "Sign Out",
+  "signIn": "Sign In",
+  "signInAmazon": "Sign In with Amazon",
+  "signInApple": "Sign In with Apple",
+  "signInFacebook": "Sign In with Facebook",
+  "signInGoogle": "Sign In with Google"
 }

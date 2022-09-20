@@ -1,31 +1,77 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-import Button from '@mui/material/Button';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Button, Tabs, TabItem, TextField, PasswordField, Loader } from '@aws-amplify/ui-react';
+import '@fontsource/inter/variable.css';
 
 import useHooks from './hooks';
+
+import './styles/styles.css';
 
 const Login = () => {
   const { t } = useTranslation();
   const { states: { isBackdropOpen }, handlers: { handleLogIn } } = useHooks();
 
   return (
-    <div>
-      <Button
-        variant='outlined'
-        onClick={handleLogIn}
-      >
-        {t('logIn')}
-      </Button>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isBackdropOpen}
-      >
-        <CircularProgress color='inherit'/>
-      </Backdrop>
-    </div>
+    <>
+      {
+        isBackdropOpen && (
+          <div className='Backdrop'>
+            <Loader width="3rem" height="3rem" />
+          </div>
+        )
+      }
+      <div className='LoginPage'>
+        <div className='Login'>
+          <Tabs
+            spacing="equal"
+            justifyContent="flex-start">
+            <TabItem title="Sign In">
+              <Button
+                onClick={() => alert('hello')}
+              >
+                {t('signInAmazon')}
+              </Button>
+              <Button
+                onClick={() => alert('hello')}
+              >
+                {t('signInApple')}
+              </Button>
+              <Button
+                onClick={() => alert('hello')}
+              >
+                {t('signInFacebook')}
+              </Button>
+              <Button
+                onClick={() => alert('hello')}
+              >
+                {t('signInGoogle')}
+              </Button>
+              - or -
+              <TextField
+                placeholder="Username"
+              />
+              <PasswordField
+                placeholder="Password"
+                autoComplete="new-password"
+                name="password"
+              />
+              <Button
+                loadingText=""
+                onClick={handleLogIn}
+                ariaLabel=""
+              >
+                {t('signIn')}
+              </Button>
+              Forget password
+            </TabItem>
+            <TabItem title="Create account">
+              Tab content #2
+            </TabItem>
+          </Tabs>
+        </div>
+      </div>
+    </>
   );
 }
 

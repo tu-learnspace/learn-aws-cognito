@@ -4,6 +4,6 @@
   "learnReact": "Học React",
   "pageNotFoundMessage": "Không Tìm Thấy Trang.",
   "homePage": "TRANG CHỦ",
-  "logOut": "ĐĂNG XUẤT",
-  "logIn": "ĐĂNG NHẬP"
+  "signOut": "Đăng Xuất",
+  "signIn": "Đăng Nhập"
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import Button from '@mui/material/Button';
+import { Button } from '@aws-amplify/ui-react';
 
 
 const LogOutButton = () => {
@@ -10,12 +10,13 @@ const LogOutButton = () => {
 
   return (
     <Button
-      variant='outlined'
+      loadingText=""
       onClick={() => {
         history.push('/login');
       }}
+      ariaLabel=""
     >
-      {t('logOut')}
+      {t('signOut')}
     </Button>
   );
 }
