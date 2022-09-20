@@ -75,6 +75,7 @@ export function loadUserFromLocalStorage() {
 }
 
 
+
 //
 // async function getCurrentUser(){
 //   try {
