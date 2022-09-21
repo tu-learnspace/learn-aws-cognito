@@ -1,15 +1,25 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tabs, TabItem, Loader, Button, TextField, PasswordField } from '@aws-amplify/ui-react'
+import {
+  Tabs,
+  TabItem,
+  Loader,
+  Button,
+  TextField,
+  PasswordField,
+  Flex,
+  Heading,
+  useTheme,
+} from '@aws-amplify/ui-react';
 import '@fontsource/inter/variable.css';
 import '@aws-amplify/ui-react/styles.css';
-import ConfirmCodePopUp from 'containers/ConfirmCode';
 
 import useHooks from './hooks';
 import './styles/styles.css';
 
 const LoginPage = () => {
   const { t } = useTranslation();
+  const { tokens } = useTheme();
   const {
     states: {
       isBackdropOpen,
@@ -40,7 +50,16 @@ const LoginPage = () => {
       {
         isConfirmCodePopUpOpen && (
           <div className='ConfirmationCode'>
-            <ConfirmCodePopUp/>
+            <Flex as="form" direction="column" gap={tokens.space.medium}>
+              <Heading level={3}>Sign Up</Heading>
+              <TextField label="Confirmation Code" name="confirmation-code" />
+              <Button type="submit" onClick={(e) => e.preventDefault()}>
+                Confirm
+              </Button>
+              <Button type="submit" onClick={(e) => e.preventDefault()}>
+                Resend
+              </Button>
+            </Flex>
           </div>
         )
       }
@@ -85,7 +104,7 @@ const LoginPage = () => {
                 />
               </div>
               <Button
-                loadingText=""
+                loadingText="Signing You In..."
                 onClick={handleSignIn}
                 ariaLabel=""
               >
@@ -140,7 +159,7 @@ const LoginPage = () => {
                 />
               </div>
               <Button
-                loadingText=""
+                loadingText="Signing You Up..."
                 onClick={handleSignUp}
                 ariaLabel=""
               >

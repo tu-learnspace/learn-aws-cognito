@@ -22,34 +22,21 @@ Auth.configure({
 export const onSignUp = async ({ emailValue, passwordValue }) => {
   currentUserName = emailValue;
 
-  // return await Auth.signUp({
-  //   username: emailValue,
-  //   password: passwordValue,
-  //   attributes: {
-  //     email: emailValue
-  //   }
-  // });
+  return await Auth.signUp({
+    username: emailValue,
+    password: passwordValue,
+    attributes: {
+      email: emailValue
+    }
+  });
 }
 
-export function onResendConfirmationCode() {
-  Auth.resendSignUp(currentUserName).then((result) => {
-    return {
-      success: {
-        message: 'Confirmation code resend' // Swal.fire('Confirmation code resend')
-      }
-    };
-  }).catch(err => {
-    return { error: err };
-  })
+export const onResendConfirmationCode = async () => {
+  return await Auth.resendSignUp(currentUserName);
 }
 
-export function onUserConfirmation({ confirmationCode }) {
-  Auth.confirmSignUp(currentUserName, confirmationCode).then(result => {
-    //displayObject(result)
-    //toggleModal('login', true)
-  }).catch(err => {
-    return { error: err };
-  })
+export const onUserConfirmation = async ({ confirmationCode }) => {
+  return await Auth.confirmSignUp(currentUserName, confirmationCode);
 }
 
 // fake test
