@@ -2,7 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Tabs, TabItem, TextField, PasswordField, Loader } from '@aws-amplify/ui-react';
+
 import '@fontsource/inter/variable.css';
+import '@aws-amplify/ui-react/styles.css';
 
 import useHooks from './hooks';
 
