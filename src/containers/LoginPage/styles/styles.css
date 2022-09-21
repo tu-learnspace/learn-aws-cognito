@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap');
+
 .Backdrop {
   width: 100%;
   height: 100%;
@@ -24,7 +26,7 @@
 
 .Login {
   width: 500px;
-  height: 600px;
+  height: 620px;
   margin: 0;
   position: absolute;
   top: 50%;
@@ -37,17 +39,39 @@
   z-index: 1;
 }
 
-.amplify-button {
-  font-family: var(--amplify-fonts-default-variable) !important;
+.TextField {
+  text-align: left;
 }
 
+.ConfirmationCode {
+}
+
+.amplify-button {
+  font-family: var(--amplify-fonts-default-variable) !important;
+  font-weight: 500 !important;
+}
+
+/*tab 1*/
 #radix-2-content-0 {
   display: flex;
   flex-direction: column;
   padding: 45px;
-
-
 }
 #radix-2-content-0 > button {
   margin-top: 18px;
+}
+#radix-2-content-0[data-state="inactive"] {
+  padding: 0px;
+}
+/*tab 2*/
+#radix-2-content-1 {
+  display: flex;
+  flex-direction: column;
+  padding: 45px;
+}
+#radix-2-content-1 > button {
+  margin-top: 18px;
+}
+#radix-2-content-1[data-state="inactive"] {
+  padding: 0px;
 }

@@ -1,54 +1,56 @@
-import { Auth, Hub } from 'aws-amplify'
-import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
+import { Auth, /*Hub*/ } from 'aws-amplify'
+//import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
 
 import appConfig from 'appConfig';
 import { getItem } from 'utilities/storageManager';
 
 let currentUserName = null;
-//
-// Auth.configure({
-//   userPoolId: appConfig.userPoolId,
-//   userPoolWebClientId: appConfig.clientId,
-//   oauth: {
-//     region: 'us-east-1',
-//     domain: 'globomanticscongnito.auth.us-east-1.amazoncognito.com',
-//     scope: ['email', 'openid', 'aws.cognito.signin.user.admin'],
-//     redirectSignIn: 'https://127.0.0.1:8080',
-//     redirectSignOut: 'https://127.0.0.1:8080',
-//     responseType: 'code' // or 'token', note that REFRESH token will only be generated when the responseType is code
-//   }
-// });
-//
-// function onSignUp() {
-//   let userData = {
-//     username: document.getElementById('signup-email').value,
-//     password: document.getElementById('signup-password').value,
-//     confirmPassword: document.getElementById('signup-confirm-password').value,
-//   }
-//
-//   currentUserName = userData.username;
-//
-//   if (userData.password != userData.confirmPassword) return Swal.fire('Password and Confirm Password do not match.')
-//
-//   Auth.signUp({
-//     username: userData.username,
-//     password: userData.password,
-//     attributes:
-//       {
-//         email: userData.username
-//       }
-//   }).then((result) => {
-//     if (!result.userConfirmed) {
-//       toggleModal('confirm', true)
-//     }
-//     else {
-//       toggleModal('login', true)
-//     }
-//   }).catch(err => {
-//     displayObject(err)
-//   })
-// }
 
+Auth.configure({
+  userPoolId: appConfig.userPoolId,
+  userPoolWebClientId: appConfig.clientId,
+  // oauth: {
+  //   region: 'us-east-1',
+  //   domain: 'globomanticscongnito.auth.us-east-1.amazoncognito.com',
+  //   scope: ['email', 'openid', 'aws.cognito.signin.user.admin'],
+  //   redirectSignIn: 'https://127.0.0.1:8080',
+  //   redirectSignOut: 'https://127.0.0.1:8080',
+  //   responseType: 'code' // or 'token', note that REFRESH token will only be generated when the responseType is code
+  // }
+});
+
+export const onSignUp = async ({ emailValue, passwordValue }) => {
+  currentUserName = emailValue;
+
+  // return await Auth.signUp({
+  //   username: emailValue,
+  //   password: passwordValue,
+  //   attributes: {
+  //     email: emailValue
+  //   }
+  // });
+}
+
+export function onResendConfirmationCode() {
+  Auth.resendSignUp(currentUserName).then((result) => {
+    return {
+      success: {
+        message: 'Confirmation code resend' // Swal.fire('Confirmation code resend')
+      }
+    };
+  }).catch(err => {
+    return { error: err };
+  })
+}
+
+export function onUserConfirmation({ confirmationCode }) {
+  Auth.confirmSignUp(currentUserName, confirmationCode).then(result => {
+    //displayObject(result)
+    //toggleModal('login', true)
+  }).catch(err => {
+    return { error: err };
+  })
+}
 
 // fake test
 async function fakeGetUser () {
@@ -62,7 +64,7 @@ async function fakeGetUser () {
   });
 }
 
-export async function getUser() {
+export const getUser = async () => {
   try {
     return await fakeGetUser();
   } catch (e) {
@@ -70,13 +72,12 @@ export async function getUser() {
   }
 }
 
-export function loadUserFromLocalStorage() {
+export const loadUserFromLocalStorage = () => {
   return getItem('user');
 }
 
 
 
-//
 // async function getCurrentUser(){
 //   try {
 //     var currentUser = (await Auth.currentAuthenticatedUser());
@@ -121,8 +122,6 @@ export function loadUserFromLocalStorage() {
 //
 //
 //
-
-
 
 
 

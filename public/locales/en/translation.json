@@ -9,5 +9,10 @@
   "signInAmazon": "Sign In with Amazon",
   "signInApple": "Sign In with Apple",
   "signInFacebook": "Sign In with Facebook",
-  "signInGoogle": "Sign In with Google"
+  "signInGoogle": "Sign In with Google",
+  "signUp": "Sign Up",
+  "signUpAmazon": "Sign Up with Amazon",
+  "signUpApple": "Sign Up with Apple",
+  "signUpFacebook": "Sign Up with Facebook",
+  "signUpGoogle": "Sign Up with Google"
 }
