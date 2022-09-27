@@ -1,8 +1,5 @@
-import { Auth, Hub } from 'aws-amplify'
-import { CognitoUser, ISignUpResult } from 'amazon-cognito-identity-js';
-
+import { Auth } from 'aws-amplify'
 import appConfig from 'appConfig';
-import { getItem } from 'utilities/storageManager';
 
 
 Auth.configure({
@@ -33,6 +30,10 @@ export async function getCurrentUser() {
   }
 }
 
+export async function loadUserFromStorage() {
+  return await getCurrentUser();
+}
+
 export const onLogin = async ({ username, password }) => {
   const user_name = username + '@';
   try {
@@ -45,9 +46,8 @@ export const onLogin = async ({ username, password }) => {
     return await getCurrentUser();
   } catch (err) {
     if (err.code === "UserNotConfirmedException") {
-      //toggleModal('confirm', true)
       return {
-        errorCode: err.code,
+        errorCode: err.code, //toggleModal('confirm', true)
       }
     } else {
       console.log('[userManager][onLogin] err: ', err);
@@ -118,9 +118,8 @@ export const onUpdatePassword = async ({ oldPassword, newPassword }) => {
 //   .catch(err => displayObject(err))
 // }
 
-const onLogout = async () => {
+export const onSignOut = async () => {
   await Auth.signOut();
-  //setUserState(null);
 }
 
 

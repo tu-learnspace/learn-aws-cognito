@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -8,25 +7,23 @@ import Header from 'components/Header';
 import ErrorPageNotFound from 'components/PageNotFound';
 import Unauthorized from 'containers/Unauthorized';
 import LogOutButton from 'containers/AuthenticatedPage/LogOutButton';
-import { selectCurrentUser } from 'containers/App/selectors';
-import { getCurrentUser } from 'utilities/userManager';
+import useAuthenticated from 'hooks/useAuthenticated';
 
 import useHooks from './hooks';
 
 
 const AuthenticatedPage = () => {
-  const isAuthorized = true;
-  const { name, email } = useSelector(selectCurrentUser);
-  const a = getCurrentUser();
-  console.log('[AuthenticatedPage] a: ', a);
+  const { isAuthenticated, onSignOut, currentUser } = useAuthenticated();
+  const { username } = currentUser ? currentUser : '';
+  const isAuthorized = false;
   const { headerName } = useHooks();
   const { t } = useTranslation();
 
   return (
     <>
-      {isAuthorized && (
+      { headerName && <Header headerName={t(headerName)} userName={username} children={<LogOutButton onSignOut={onSignOut} />}/> }
+      { isAuthenticated && isAuthorized && (
         <>
-          { headerName && <Header headerName={t(headerName)} userName={name + ' ' + email} children={<LogOutButton/>}/> }
           <Switch>
             {authRoutes.map(({ path, exact, component }) => {
               return (
@@ -37,7 +34,11 @@ const AuthenticatedPage = () => {
           </Switch>
         </>
       )}
-      {!isAuthorized && (<><Unauthorized /></>)}
+      { isAuthenticated && !isAuthorized && (
+        <>
+          <Header headerName={t(headerName)} userName={username} children={<LogOutButton onSignOut={onSignOut}/>}/>
+          <Unauthorized />
+        </>)}
     </>
   );
 };

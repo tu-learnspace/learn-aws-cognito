@@ -1,16 +1,13 @@
-import { useState, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
-
+import { useState, useCallback, useEffect } from 'react';
 import {
   onLogin,
   onResendConfirmationCode,
   onSignUp,
   onUserConfirmation,
 } from 'utilities/userManager';
-import { getItem } from 'utilities/storageManager';
+import { getItem, deleteAllItems } from 'utilities/storageManager';
 
 const useHooks = () => {
-  const history = useHistory();
   const [isBackdropOpen, setIsBackdropOpen] = useState(false);
   const [isConfirmCodePopUpOpen, setIsConfirmCodePopUpOpen] = useState(false);
   const [emailValue, setEmailValue] = useState('');
@@ -27,17 +24,21 @@ const useHooks = () => {
     setIsBackdropOpen(true);
     const result = await onLogin({ username: emailValue, password: passwordValue });
     console.log('[LoginPage][handleSignIn] result: ', result);
-    if (result.errorCode) {
+    if (result.errorCode) { // user not confirm
       setIsConfirmCodePopUpOpen(true);
     }
-    setIsBackdropOpen(false);
-    history.push('/');
-  }, [setIsBackdropOpen, history, emailValue, passwordValue]);
+    else {
+      setIsBackdropOpen(false);
+      // TODO: why I cant history.push here?
+      const newUrl = new URL(window.location.href);
+      window.location.assign(newUrl.origin);
+    }
+  }, [setIsBackdropOpen, emailValue, passwordValue]);
 
-  // delete local storage everytime
-  // useEffect(() => {
-  //   deleteAllItems();
-  // }, []);
+  // delete local storage everytime enter /login
+  useEffect(() => {
+    deleteAllItems();
+  }, []);
 
   const handleSignUp = useCallback( async() => {
     setIsBackdropOpen(!isBackdropOpen);

@@ -1,24 +1,35 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsAuthenticated, selectCurrentUser } from 'containers/App/selectors';
+import { actions } from 'containers/App/slice';
 
-import isEmpty from 'lodash/fp/isEmpty';
+import useActions from './useActions';
 
-import { getCurrentUser } from 'utilities/userManager';
+const useAuthenticated = () => {
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const currentUser = useSelector(selectCurrentUser);
+  const history = useHistory();
 
+  const { signOut } = actions;
+  const { signOutAction } = useActions({
+    signOutAction: signOut,
+  }, [signOut]);
 
-const useAuthenticated = async () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      // redirect login
+      history.push('/login');
+    }
+  }, [isAuthenticated, history]);
 
-  useEffect( () => {
-    const currentUser = getCurrentUser();
-    console.log('[useAuthenticated] currentUser: ', currentUser);
-    setIsAuthenticated(!isEmpty(currentUser))
-    console.log('[useAuthenticated] isAuthenticated: ', isAuthenticated);
-  }, []);
+  const onSignOut = useCallback(() => {
+    // dispatch some actions before do signOut redirect
+    signOutAction();
+    history.push('/login');
+  }, [signOutAction, history]);
 
-  return {
-    isAuthenticated,
-    // currentUser
-  };
+  return { isAuthenticated, currentUser, onSignOut };
 };
 
 export default useAuthenticated;

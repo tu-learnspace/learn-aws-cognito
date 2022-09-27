@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from 'react';
-
 import { authRoutes } from 'routes';
 
 const useHooks = () => {
