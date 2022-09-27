@@ -6,12 +6,12 @@ import { getCurrentUser } from './userManager';
 import isEmpty from 'lodash/fp/isEmpty';
 
 
+// luc nay get tu selector 
 const ProtectedRoute = ({ children }) => {
-  // const { isAuthenticated } = useAuthenticated();
-  // console.log('[ProtectedRoute], isAuthenticated: ', isAuthenticated);
-  const isAuthenticated = true;
+  const { userName } = getCurrentUser();
+  console.log('[ProtectedRoute], userName: ', userName);
 
-  if (!isAuthenticated) {
+  if (!userName) {
     return <Redirect to='/login'/>;
   }
 
