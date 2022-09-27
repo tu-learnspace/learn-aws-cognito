@@ -3,9 +3,8 @@
 .Backdrop {
   width: 100%;
   height: 100%;
-  opacity: 0.55;
-  background: #000000;
-  z-index: 9999;
+  background: rgba(0, 0, 0, 0.49);
+  z-index: 999;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -44,34 +43,63 @@
 }
 
 .ConfirmationCode {
+  width: 50%;
+  height: 50%;
+  background: #ffffff;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.CloseButton {
+  display: inline-block;
+  width: 43px;
+  margin-bottom: 40px;
 }
 
 .amplify-button {
   font-family: var(--amplify-fonts-default-variable) !important;
-  font-weight: 500 !important;
+  font-weight: 530 !important;
 }
-
+/*
+NOTE: change the class base on total tabs: radix-{total tabs}-content-{tab num}
+ */
 /*tab 1*/
-#radix-2-content-0 {
+#radix-3-content-0 {
   display: flex;
   flex-direction: column;
   padding: 45px;
 }
-#radix-2-content-0 > button {
+#radix-3-content-0 > button {
   margin-top: 18px;
 }
-#radix-2-content-0[data-state="inactive"] {
+#radix-3-content-0[data-state="inactive"] {
   padding: 0px;
 }
 /*tab 2*/
-#radix-2-content-1 {
+#radix-3-content-1 {
   display: flex;
   flex-direction: column;
   padding: 45px;
 }
-#radix-2-content-1 > button {
+#radix-3-content-1 > button {
   margin-top: 18px;
 }
-#radix-2-content-1[data-state="inactive"] {
+#radix-3-content-1[data-state="inactive"] {
+  padding: 0px;
+}
+/*tab 3*/
+#radix-3-content-2 {
+  display: flex;
+  flex-direction: column;
+  padding: 45px;
+  text-align: left;
+}
+#radix-3-content-2 > button {
+  margin-top: 18px;
+}
+#radix-3-content-2[data-state="inactive"] {
   padding: 0px;
 }

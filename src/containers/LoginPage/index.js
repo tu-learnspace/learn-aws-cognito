@@ -35,6 +35,11 @@ const LoginPage = () => {
       onEmailInputChange,
       onPasswordInputChange,
       onConfirmPasswordInputChange,
+      onConfirmCodeInputChange,
+      onUserNameInputChange,
+      handleCloseButtonClick,
+      handleConfirmButtonClick,
+      handleResendButtonClick,
     }
   } = useHooks();
 
@@ -49,17 +54,24 @@ const LoginPage = () => {
       }
       {
         isConfirmCodePopUpOpen && (
-          <div className='ConfirmationCode'>
-            <Flex as="form" direction="column" gap={tokens.space.medium}>
-              <Heading level={3}>Sign Up</Heading>
-              <TextField label="Confirmation Code" name="confirmation-code" />
-              <Button type="submit" onClick={(e) => e.preventDefault()}>
-                Confirm
-              </Button>
-              <Button type="submit" onClick={(e) => e.preventDefault()}>
-                Resend
-              </Button>
-            </Flex>
+          <div className='Backdrop'>
+            <div className='ConfirmationCode'>
+              <Flex direction="column" gap={tokens.space.medium}>
+                <Button className='CloseButton' onClick={handleCloseButtonClick}>x</Button>
+                <Heading level={4}>Check Your Email for a Verification Code</Heading>
+                <TextField
+                  label="Confirmation Code"
+                  name="confirmation-code"
+                  onChange={onConfirmCodeInputChange}
+                />
+                <Button onClick={handleConfirmButtonClick}>
+                  Confirm
+                </Button>
+                <Button onClick={handleResendButtonClick}>
+                  Resend
+                </Button>
+              </Flex>
+            </div>
           </div>
         )
       }
@@ -92,15 +104,16 @@ const LoginPage = () => {
               - or -
               <div className='TextField'>
                 <TextField
-                  label='Username'
-                  labelHidden
-                  isRequired
                   placeholder="Username"
+                  isRequired
+                  onChange={onEmailInputChange}
                 />
                 <PasswordField
-                  placeholder="Password"
-                  autoComplete="new-password"
+                  autoComplete= "new-password"
                   name="password"
+                  placeholder="Password"
+                  isRequired
+                  onChange={onPasswordInputChange}
                 />
               </div>
               <Button
@@ -165,6 +178,27 @@ const LoginPage = () => {
               >
                 {t('signUp')}
               </Button>
+            </TabItem>
+            <TabItem title="Confirm">
+              <Flex direction="column" gap={tokens.space.medium}>
+                <Heading level={4}>Verify account with Code</Heading>
+                <TextField
+                  label="Username"
+                  name="username"
+                  onChange={onUserNameInputChange}
+                />
+                <TextField
+                  label="Confirmation Code"
+                  name="confirmation-code"
+                  onChange={onConfirmCodeInputChange}
+                />
+                <Button onClick={handleConfirmButtonClick}>
+                  Confirm
+                </Button>
+                <Button onClick={handleResendButtonClick}>
+                  Resend
+                </Button>
+              </Flex>
             </TabItem>
           </Tabs>
         </div>

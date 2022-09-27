@@ -6,5 +6,5 @@ export class AppConfiguration {
   }
 }
 
-const singleton = new AppConfiguration();
-export default singleton;
+const appConfiguration = new AppConfiguration();
+export default appConfiguration;

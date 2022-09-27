@@ -1,11 +1,24 @@
+import { useCallback, useEffect, useState } from 'react'
+
 import isEmpty from 'lodash/fp/isEmpty';
 
-import { loadUserFromLocalStorage } from 'utilities/userManager';
+import { getCurrentUser } from 'utilities/userManager';
 
-const useAuthenticated = () => {
-  const currentUser = loadUserFromLocalStorage();
-  const isAuthenticated = !isEmpty(currentUser);
-  return { isAuthenticated, currentUser };
+
+const useAuthenticated = async () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect( () => {
+    const currentUser = getCurrentUser();
+    console.log('[useAuthenticated] currentUser: ', currentUser);
+    setIsAuthenticated(!isEmpty(currentUser))
+    console.log('[useAuthenticated] isAuthenticated: ', isAuthenticated);
+  }, []);
+
+  return {
+    isAuthenticated,
+    // currentUser
+  };
 };
 
 export default useAuthenticated;

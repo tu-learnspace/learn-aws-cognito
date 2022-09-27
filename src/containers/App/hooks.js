@@ -1,19 +1,12 @@
 import { useEffect } from 'react';
 
-import useActions from 'hooks/useActions';
-import { loadUserFromLocalStorage } from 'utilities/userManager';
-
-import { actions } from './slice';
+import { getCurrentUser } from 'utilities/userManager';
 
 const useHooks = () => {
-  const { storeUserAction } = actions;
-  const { storeUser } = useActions({
-    storeUser: storeUserAction,
-  }, [storeUserAction]);
 
-  const initializeUser = () => {
-    const user = loadUserFromLocalStorage();
-    storeUser(user);
+  const initializeUser = async () => {
+    const user = await getCurrentUser();
+    console.log('[App][initializeUser] user: ', user);
   };
 
   useEffect(() => {
