@@ -15,7 +15,7 @@ import useHooks from './hooks';
 const AuthenticatedPage = () => {
   const { isAuthenticated, onSignOut, currentUser } = useAuthenticated();
   const { username } = currentUser ? currentUser : '';
-  const isAuthorized = false;
+  const isAuthorized = true;
   const { headerName } = useHooks();
   const { t } = useTranslation();
 

@@ -40,6 +40,7 @@ const LoginPage = () => {
       handleCloseButtonClick,
       handleConfirmButtonClick,
       handleResendButtonClick,
+      handleForgotPassword,
     }
   } = useHooks();
 
@@ -125,7 +126,12 @@ const LoginPage = () => {
               >
                 {t('signIn')}
               </Button>
-              Forget password
+              <Button
+                variation="link"
+                onClick={handleForgotPassword}
+              >
+                Forget password
+              </Button>
             </TabItem>
             <TabItem title="Create account">
               <Button

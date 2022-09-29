@@ -4,6 +4,7 @@ import {
   onResendConfirmationCode,
   onSignUp,
   onUserConfirmation,
+  onForgotPassword,
 } from 'utilities/userManager';
 import { getItem, deleteAllItems } from 'utilities/storageManager';
 
@@ -129,6 +130,15 @@ const useHooks = () => {
     setUserNameValue(event.target.value);
   }, [setUserNameValue]);
 
+  const handleForgotPassword = useCallback(async() => {
+    try {
+      const res = await onForgotPassword();
+      console.log('[LoginPage][handleForgotPassword] res: ', res);
+    } catch (err) {
+      console.log('[LoginPage][handleForgotPassword] err: ', err);
+    }
+  }, []);
+
   return {
     states: {
       isBackdropOpen,
@@ -150,6 +160,7 @@ const useHooks = () => {
       handleCloseButtonClick,
       handleConfirmButtonClick,
       handleResendButtonClick,
+      handleForgotPassword
     }
   };
 };

@@ -23,10 +23,6 @@ export async function getCurrentUser() {
   return await Auth.currentAuthenticatedUser();
 }
 
-export async function loadUserFromStorage() {
-  return await getCurrentUser();
-}
-
 export const onLogin = async ({ username, password }) => {
   const user_name = username + '@';
   const result = await Auth.signIn(user_name, password);
@@ -64,46 +60,29 @@ export const onUpdatePassword = async ({ oldPassword, newPassword }) => {
   console.log('[userManager][onUpdatePassword] result: ', result);
 }
 
-// export const onForgotPassword = async () => {
-//   var username = prompt('Enter your username');
-//   Auth.forgotPassword(username).then(result => {
-//     var confirmationCode = prompt('Enter confirmation code sent to your email')
-//     var newPassword = prompt('Enter your new password');
-//     Auth.forgotPasswordSubmit(username, confirmationCode, newPassword).then(confirationResult => {
-//       displayObject(confirationResult)
-//     })
-//     .catch(err => displayObject(err))
-//   })
-//   .catch(err => displayObject(err))
-// }
-
-// async function displayUserDetails() {
-//   Auth.userAttributes(await getCurrentUser()).then(result => {
-//     Swal.fire({
-//       title: 'User Attributes',
-//       html: `
-//       <ul class="list-group">
-//        ${result.map(z => `<li class="list-group-item"><b>${z.getName()}:</b> ${z.getValue()}</li>`).join('')}
-//      </ul>
-//        `
-//     })
-//   })
-//   .catch(err => displayObject(err))
-// }
-
-// async function updateUserAttributes(attributeName) {
-//   var value = prompt('Enter attribute Value');
-//   var attributes = {}
-//   attributes[attributeName] = value;
-//   Auth.updateUserAttributes(await getCurrentUser(), attributes).then(result => {
-//     displayObject(result)
-//   })
-//   .catch(err => displayObject(err))
-// }
-
-export const onSignOut = async () => {
-  await Auth.signOut();
+export const onForgotPassword = async () => {
+  const username = prompt('Enter your username');
+  await Auth.forgotPassword(username);
+  const confirmationCode = prompt('Enter confirmation code sent to your email')
+  const newPassword = prompt('Enter your new password');
+  return await Auth.forgotPasswordSubmit(username, confirmationCode, newPassword);
 }
 
+export const getUserDetails = async () => {
+  return await Auth.userAttributes(await getCurrentUser());
+}
 
+export const updateUserAttributes = async (attributeName) => {
+  const value = prompt('Enter attribute Value');
+  const attributes = {}
+  attributes[attributeName] = value;
+  await Auth.updateUserAttributes(await getCurrentUser(), attributes);
+}
+
+export const onSignOut = async () => {
+  // access token will be valid for its lifetime (1 hour) even after logged out
+  await Auth.signOut({
+    global: true
+  });
+}
 

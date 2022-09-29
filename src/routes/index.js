@@ -1,9 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-
 import HomeApp from 'containers/HomePage/HomeApp';
 import ErrorPageNotFound from 'components/PageNotFound';
-
 import { defaultPath, APP_PATH, NAME } from './constant';
 
 
@@ -11,10 +9,10 @@ const externalRoutes = [
   {
     path: APP_PATH.DEFAULT,
     exact: true,
-    component: () => <Redirect to={defaultPath}/>,
+    component: () => <Redirect to={defaultPath}/>, // when enter '/' will be redirected to '/home'
   },
   {
-    name: NAME.homePage,  // will render in Header (headerName)
+    name: NAME.homePage,  // this info will be rendered in Header (headerName)
     path: APP_PATH.HOME,
     exact: true,
     component: HomeApp,

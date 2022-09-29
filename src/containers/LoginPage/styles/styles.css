@@ -76,7 +76,7 @@ NOTE: change the class base on total tabs: radix-{total tabs}-content-{tab num}
   margin-top: 18px;
 }
 #radix-3-content-0[data-state="inactive"] {
-  padding: 0px;
+  padding: 0;
 }
 /*tab 2*/
 #radix-3-content-1 {
@@ -88,7 +88,7 @@ NOTE: change the class base on total tabs: radix-{total tabs}-content-{tab num}
   margin-top: 18px;
 }
 #radix-3-content-1[data-state="inactive"] {
-  padding: 0px;
+  padding: 0;
 }
 /*tab 3*/
 #radix-3-content-2 {
@@ -101,5 +101,5 @@ NOTE: change the class base on total tabs: radix-{total tabs}-content-{tab num}
   margin-top: 18px;
 }
 #radix-3-content-2[data-state="inactive"] {
-  padding: 0px;
+  padding: 0;
 }
