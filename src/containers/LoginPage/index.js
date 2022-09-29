@@ -107,6 +107,8 @@ const LoginPage = () => {
                   placeholder="Username"
                   isRequired
                   onChange={onEmailInputChange}
+                  hasError={hasEmailError}
+                  errorMessage={emailErrorMessage}
                 />
                 <PasswordField
                   autoComplete= "new-password"

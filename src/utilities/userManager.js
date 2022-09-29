@@ -20,14 +20,7 @@ Auth.configure({
 });
 
 export async function getCurrentUser() {
-  try {
-    const currentUser = await Auth.currentAuthenticatedUser();
-    console.log('[userManager][getCurrentUser] currentUser: ', currentUser);
-    return currentUser;
-  }
-  catch (err) {
-    console.log('[userManager][getCurrentUser] err: ', err); //setUserState(null)
-  }
+  return await Auth.currentAuthenticatedUser();
 }
 
 export async function loadUserFromStorage() {
@@ -36,23 +29,13 @@ export async function loadUserFromStorage() {
 
 export const onLogin = async ({ username, password }) => {
   const user_name = username + '@';
-  try {
-    const result = await Auth.signIn(user_name, password);
-    if (result.challengeName === 'SOFTWARE_TOKEN_MFA') {
-      const verificationCode = prompt('Enter your TOTP token');
-      const confirmSignInResult = await Auth.confirmSignIn(result, verificationCode, 'SOFTWARE_TOKEN_MFA');
-      console.log('[userManager][onLogin] confirmSignInResult: ', confirmSignInResult);
-    }
-    return await getCurrentUser();
-  } catch (err) {
-    if (err.code === "UserNotConfirmedException") {
-      return {
-        errorCode: err.code, //toggleModal('confirm', true)
-      }
-    } else {
-      console.log('[userManager][onLogin] err: ', err);
-    }
+  const result = await Auth.signIn(user_name, password);
+  if (result.challengeName === 'SOFTWARE_TOKEN_MFA') {
+    const verificationCode = prompt('Enter your TOTP token');
+    const confirmSignInResult = await Auth.confirmSignIn(result, verificationCode, 'SOFTWARE_TOKEN_MFA');
+    console.log('[userManager][onLogin] confirmSignInResult: ', confirmSignInResult);
   }
+  return await getCurrentUser();
 }
 
 export const onSignUp = async ({ emailValue, passwordValue }) => {

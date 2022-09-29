@@ -22,18 +22,25 @@ const useHooks = () => {
 
   const handleSignIn = useCallback( async() => {
     setIsBackdropOpen(true);
-    const result = await onLogin({ username: emailValue, password: passwordValue });
-    console.log('[LoginPage][handleSignIn] result: ', result);
-    if (result.errorCode) { // user not confirm
-      setIsConfirmCodePopUpOpen(true);
-    }
-    else {
+    try {
+      const result = await onLogin({ username: emailValue, password: passwordValue });
+      console.log('[LoginPage][handleSignIn] result: ', result);
       setIsBackdropOpen(false);
       // TODO: why I cant history.push here?
       const newUrl = new URL(window.location.href);
       window.location.assign(newUrl.origin);
+    } catch (err) {
+      if (err.code === "UserNotConfirmedException") {
+        setIsConfirmCodePopUpOpen(true); //toggleModal('confirm', true)
+      } else if (err.code === 'NotAuthorizedException') {
+        setIsBackdropOpen(false);
+        setHasEmailError(true);
+        setEmailErrorMessage('Wrong password or username.');
+      } else {
+        console.log('[LoginPage][handleSignIn] err: ', err);
+      }
     }
-  }, [setIsBackdropOpen, emailValue, passwordValue]);
+  }, [setIsBackdropOpen, emailValue, passwordValue, setHasEmailError, setEmailErrorMessage]);
 
   // delete local storage everytime enter /login
   useEffect(() => {
