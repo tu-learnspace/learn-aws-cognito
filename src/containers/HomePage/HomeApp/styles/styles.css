@@ -39,5 +39,42 @@
 
 .App-Language {
   width: 340px;
-  padding: 30px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-Language-Button {
+  margin-top: 15px;
+}
+
+.Backdrop {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.49);
+  z-index: 999;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Settings {
+  background: #ffffff;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Settings-Button {
+  justify-content: left;
+}
+
+.Settings-CloseButton {
+  display: inline-block;
+  width: 43px;
+  margin-bottom: 10px;
 }

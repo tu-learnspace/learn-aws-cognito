@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
-import {
-  getUserDetails,
-} from 'utilities/userManager';
+import { useState, useEffect, useCallback } from 'react'
+import { getUserDetails } from 'utilities/userManager';
 
 
 const useHooks = () => {
   const [userDetails, setUserDetails] = useState({});
+  const [isSettingsPopUpOpen, setIsSettingsPopUpOpen] = useState(false);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -25,11 +24,22 @@ const useHooks = () => {
     getUserInfo();
   }, [setUserDetails]);
 
+  const handleSettingsButtonClick = useCallback(() => {
+    setIsSettingsPopUpOpen(true);
+  }, [setIsSettingsPopUpOpen]);
+
+  const handleCloseButtonClick = useCallback(() => {
+    setIsSettingsPopUpOpen(false);
+  }, [setIsSettingsPopUpOpen]);
+
   return {
     states: {
       userDetails,
+      isSettingsPopUpOpen,
     },
     handlers: {
+      handleSettingsButtonClick,
+      handleCloseButtonClick,
     }
   };
 }
