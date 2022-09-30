@@ -26,6 +26,8 @@ const LoginPage = () => {
       isConfirmCodePopUpOpen,
       hasEmailError,
       emailErrorMessage,
+      hasUsernameError,
+      usernameErrorMessage,
       hasPasswordError,
       passwordErrorMessage,
     },
@@ -36,7 +38,7 @@ const LoginPage = () => {
       onPasswordInputChange,
       onConfirmPasswordInputChange,
       onConfirmCodeInputChange,
-      onUserNameInputChange,
+      onUsernameInputChange,
       handleCloseButtonClick,
       handleConfirmButtonClick,
       handleResendButtonClick,
@@ -87,9 +89,9 @@ const LoginPage = () => {
                 <TextField
                   placeholder="Username"
                   isRequired
-                  onChange={onEmailInputChange}
-                  hasError={hasEmailError}
-                  errorMessage={emailErrorMessage}
+                  hasError={hasUsernameError}
+                  onChange={onUsernameInputChange}
+                  errorMessage={usernameErrorMessage}
                 />
                 <PasswordField
                   autoComplete= "new-password"
@@ -111,6 +113,13 @@ const LoginPage = () => {
               <div className='TextField'>
                 <TextField
                   placeholder="Username"
+                  isRequired
+                  hasError={hasUsernameError}
+                  onChange={onUsernameInputChange}
+                  errorMessage={usernameErrorMessage}
+                />
+                <TextField
+                  placeholder="Email"
                   isRequired
                   hasError={hasEmailError}
                   onChange={onEmailInputChange}
@@ -140,7 +149,10 @@ const LoginPage = () => {
                 <TextField
                   label="Username"
                   name="username"
-                  onChange={onUserNameInputChange}
+                  isRequired
+                  hasError={hasUsernameError}
+                  onChange={onUsernameInputChange}
+                  errorMessage={usernameErrorMessage}
                 />
                 <TextField
                   label="Confirmation Code"

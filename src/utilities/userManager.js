@@ -24,22 +24,20 @@ export async function getCurrentUser() {
 }
 
 export const onLogin = async ({ username, password }) => {
-  const user_name = username + '@';
-  const result = await Auth.signIn(user_name, password);
+  const result = await Auth.signIn(username, password);
 
   if (result.challengeName === 'SOFTWARE_TOKEN_MFA') {
     const verificationCode = prompt('Enter your TOTP token');
     const confirmSignInResult = await Auth.confirmSignIn(result, verificationCode, 'SOFTWARE_TOKEN_MFA');
     console.log('[userManager][onLogin] confirmSignInResult: ', confirmSignInResult);
-    return await getCurrentUser();
   }
-   return null;
+
+  return await getCurrentUser();
 }
 
-export const onSignUp = async ({ emailValue, passwordValue }) => {
-  const username = emailValue + '@';
+export const onSignUp = async ({ userNameValue, emailValue, passwordValue }) => {
   return await Auth.signUp({
-    username,
+    username: userNameValue,
     password: passwordValue,
     attributes: {
       email: emailValue
@@ -47,14 +45,12 @@ export const onSignUp = async ({ emailValue, passwordValue }) => {
   });
 }
 
-export const onResendConfirmationCode = async (currentUserName) => {
-  const username = currentUserName + '@';
+export const onResendConfirmationCode = async (username) => {
   return await Auth.resendSignUp(username);
 }
 
-export const onUserConfirmation = async ({ currentUserName, confirmationCode }) => {
-  const username = currentUserName + '@';
-  return await Auth.confirmSignUp(username, confirmationCode);
+export const onUserConfirmation = async ({ userNameValue, confirmationCode }) => {
+  return await Auth.confirmSignUp(userNameValue, confirmationCode);
 }
 
 export const onUpdatePassword = async ({ oldPassword, newPassword }) => {
@@ -65,7 +61,7 @@ export const onUpdatePassword = async ({ oldPassword, newPassword }) => {
 export const onForgotPassword = async () => {
   const username = prompt('Enter your username');
   await Auth.forgotPassword(username);
-  const confirmationCode = prompt('Enter confirmation code sent to your email')
+  const confirmationCode = prompt('Enter confirmation code sent to your email');
   const newPassword = prompt('Enter your new password');
   return await Auth.forgotPasswordSubmit(username, confirmationCode, newPassword);
 }
@@ -96,7 +92,7 @@ export const setUpOTP = async () => {
   const user = await getCurrentUser();
   const code = await Auth.setupTOTP(user);
 
-  const qrData = `otpauth://totp/Lam Xinh Dep (${user.getUsername()})?secret=${code}`;
+  const qrData = `otpauth://totp/${appConfig.appName} (${user.getUsername()})?secret=${code}`;
   const url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + encodeURI(qrData) + '&amp;size=300x300';
 
   return {

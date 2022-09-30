@@ -45,12 +45,8 @@ const HomeApp = () => {
                       <p className='OTP-Info-Item'>Code: ${qRCodeInfo.code}</p>
                     </div>
                     <div className='MFA-Button'>
-                      <Button onClick={handleCompleteSetUpMFA}>
-                        Complete Setup
-                      </Button>
-                      <Button className='MFA-Button-Cancel' onClick={() => {handleCloseButtonClick('OTP')}}>
-                        Cancel
-                      </Button>
+                      <Button onClick={handleCompleteSetUpMFA}>Complete Setup</Button>
+                      <Button className='MFA-Button-Cancel' onClick={() => {handleCloseButtonClick('OTP')}}>Cancel</Button>
                     </div>
                   </Flex>
                 </div>
@@ -68,12 +64,8 @@ const HomeApp = () => {
                           <Heading level={3}>MFA Not Set</Heading>
                           <Heading level={4}>Do you want to setup MFA?</Heading>
                           <div className='MFA-Button'>
-                            <Button onClick={handleSetUpMFA}>
-                              Yes
-                            </Button>
-                            <Button className='MFA-Button-Cancel' onClick={() => {handleCloseButtonClick('MFA')}}>
-                              Cancel
-                            </Button>
+                            <Button onClick={handleSetUpMFA}>Yes</Button>
+                            <Button className='MFA-Button-Cancel' onClick={() => {handleCloseButtonClick('MFA')}}>Cancel</Button>
                           </div>
                         </>
                       )
@@ -95,25 +87,15 @@ const HomeApp = () => {
                 __________________________________________
                 <Heading level={4}>User Attributes</Heading>
                 __________________________________________
-                <Button className='Settings-Button' variation="link" onClick={handledAttributesButtonClick}>
-                  View Attributes
-                </Button>
-                <Button className='Settings-Button' variation="link">
-                  Update/Set Email
-                </Button>
-                <Button className='Settings-Button' variation="link">
-                  Update/Set Phone Number
-                </Button>
+                <Button className='Settings-Button' variation="link" onClick={handledAttributesButtonClick}>View Attributes</Button>
+                <Button className='Settings-Button' variation="link">Update/Set Email</Button>
+                <Button className='Settings-Button' variation="link">Update/Set Phone Number</Button>
                 __________________________________________
                 <Heading level={4}>Multi-factor authentication</Heading>
                 __________________________________________
-                <Button className='Settings-Button' onClick={handleMFAClick} variation="link">
-                  MFA Status
-                </Button>
+                <Button className='Settings-Button' onClick={handleMFAClick} variation="link">MFA Status</Button>
                 __________________________________________
-                <Button className='Settings-Button' variation="link">
-                  Change password
-                </Button>
+                <Button className='Settings-Button' variation="link">Change password</Button>
                 {shouldShowUserInfo && JSON.stringify(userDetails)}
               </Flex>
             </div>
@@ -123,12 +105,7 @@ const HomeApp = () => {
       <div className='App'>
         <div className='App-Language'>
           <SelectLanguage/>
-          <Button
-            className='App-Language-Button'
-            onClick={handleSettingsButtonClick}
-          >
-            Settings
-          </Button>
+          <Button className='App-Language-Button' onClick={handleSettingsButtonClick}>Settings</Button>
         </div>
         <header className='App-header'>
           <SvgIcon name='logo' className="App-logo"/>

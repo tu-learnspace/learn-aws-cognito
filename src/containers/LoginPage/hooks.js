@@ -6,87 +6,34 @@ import {
   onUserConfirmation,
   onForgotPassword,
 } from 'utilities/userManager';
-import { getItem, deleteAllItems } from 'utilities/storageManager';
+import { deleteAllItems } from 'utilities/storageManager';
 
 const useHooks = () => {
   const [isBackdropOpen, setIsBackdropOpen] = useState(false);
   const [isConfirmCodePopUpOpen, setIsConfirmCodePopUpOpen] = useState(false);
+
   const [emailValue, setEmailValue] = useState('');
+  const [userNameValue, setUserNameValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
   const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
   const [confirmCodeValue, setConfirmCodeValue] = useState('');
+
+  const [hasUsernameError, setHasUsernameError] = useState(false);
   const [hasEmailError, setHasEmailError] = useState(false);
+  const [usernameErrorMessage, setUsernameErrorMessage] = useState('');
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [hasPasswordError, setHasPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [userNameValue, setUserNameValue] = useState('');
 
-  const handleSignIn = useCallback( async() => {
-    setIsBackdropOpen(true);
-    try {
-      const result = await onLogin({ username: emailValue, password: passwordValue });
-      console.log('[LoginPage][handleSignIn] result: ', result);
-      setIsBackdropOpen(false);
-      if (result) {
-        const newUrl = new URL(window.location.href); // TODO: why I cant history.push here?
-        window.location.assign(newUrl.origin);
-      }
-    } catch (err) {
-      if (err.code === "UserNotConfirmedException") {
-        setIsConfirmCodePopUpOpen(true);
-      } else {
-        console.log('[LoginPage][handleSignIn] err: ', err);
-        setIsBackdropOpen(false);
-        setHasEmailError(true);
-        setEmailErrorMessage(err.code + ': ' + err.message);
-      }
-    }
-  }, [setIsBackdropOpen, emailValue, passwordValue, setHasEmailError, setEmailErrorMessage]);
 
   // delete local storage everytime enter /login
   useEffect(() => {
     deleteAllItems();
   }, []);
 
-  const handleSignUp = useCallback( async() => {
-    try {
-      setIsBackdropOpen(!isBackdropOpen);
-      const result = await onSignUp({ emailValue, passwordValue });
-      console.log('[LoginPage][handleSignUp] result: ', result);
-      setIsBackdropOpen(false);
-      if (!result.userConfirmed) {
-        setIsConfirmCodePopUpOpen(true);
-      }
-    } catch (err) {
-      setIsBackdropOpen(false);
-      console.log('[LoginPage][handleSignUp] err: ', err);
-      setEmailErrorMessage(err.code + ': ' + err.message);
-    }
-  }, [isBackdropOpen, setIsBackdropOpen, emailValue, passwordValue]);
-
-  const handleCloseButtonClick = useCallback(() => {
-    setIsConfirmCodePopUpOpen(false);
-  }, [setIsConfirmCodePopUpOpen]);
-
-  const handleConfirmButtonClick = useCallback(async () => {
-    setIsBackdropOpen(true);
-    let currentUserName;
-    if (userNameValue) {
-      currentUserName = userNameValue;
-    } else {
-      currentUserName = getItem('currentUserName');
-    }
-    const result = await onUserConfirmation({ currentUserName, confirmationCode: confirmCodeValue });
-    console.log('[LoginPage][handleConfirmButtonClick] result: ', result);
-    setIsConfirmCodePopUpOpen(false);
-  }, [setIsBackdropOpen, setIsConfirmCodePopUpOpen, confirmCodeValue, userNameValue]);
-
-  const handleResendButtonClick = useCallback(async () => {
-    const result = await onResendConfirmationCode();
-    console.log('[LoginPage][handleResendButtonClick] result: ', result);
-    setIsConfirmCodePopUpOpen(false);
-  }, [setIsConfirmCodePopUpOpen]);
-
+  /**
+   * onChange
+   */
   const onEmailInputChange = useCallback((event) => {
     event.persist();
     const { target: { value } } = event;
@@ -99,7 +46,21 @@ const useHooks = () => {
       setEmailErrorMessage('');
       setEmailValue(value);
     }
-  }, [setEmailValue]);
+  }, [setEmailValue, setHasEmailError, setEmailErrorMessage]);
+
+  const onUsernameInputChange = useCallback((event) => {
+    event.persist();
+    const { target: { value } } = event;
+
+    if (!event.target.value) {
+      setHasUsernameError(true);
+      setUsernameErrorMessage('Username cannot be empty.');
+    } else {
+      setHasUsernameError(false);
+      setUsernameErrorMessage('');
+      setUserNameValue(value);
+    }
+  }, [setUserNameValue, setUsernameErrorMessage, setHasUsernameError]);
 
   const onPasswordInputChange = useCallback((event) => {
     event.persist();
@@ -130,10 +91,74 @@ const useHooks = () => {
     setConfirmCodeValue(event.target.value);
   }, [setConfirmCodeValue]);
 
-  const onUserNameInputChange = useCallback((event) => {
-    event.persist();
-    setUserNameValue(event.target.value);
-  }, [setUserNameValue]);
+  /**
+   * handle
+   */
+  const handleSignIn = useCallback( async() => {
+    setIsBackdropOpen(true);
+    try {
+      const result = await onLogin({ username: userNameValue, password: passwordValue });
+      console.log('[LoginPage][handleSignIn] result: ', result);
+      setIsBackdropOpen(false);
+      if (result) {
+        const newUrl = new URL(window.location.href); // TODO: why I cant history.push here?
+        window.location.assign(newUrl.origin);
+      }
+    } catch (err) {
+      if (err.code === "UserNotConfirmedException") {
+        setIsConfirmCodePopUpOpen(true);
+      } else {
+        console.log('[LoginPage][handleSignIn] err: ', err);
+        setIsBackdropOpen(false);
+        setHasUsernameError(true);
+        setUsernameErrorMessage(err.code + ': ' + err.message);
+      }
+    }
+  }, [userNameValue, passwordValue, setIsBackdropOpen, setHasUsernameError, setUsernameErrorMessage]);
+
+  const handleSignUp = useCallback( async() => {
+    try {
+      setIsBackdropOpen(!isBackdropOpen);
+      const result = await onSignUp({ userNameValue, emailValue, passwordValue });
+      console.log('[LoginPage][handleSignUp] result: ', result);
+      setIsBackdropOpen(false);
+      if (!result.userConfirmed) {
+        setIsConfirmCodePopUpOpen(true);
+      }
+    } catch (err) {
+      setIsBackdropOpen(false);
+      console.log('[LoginPage][handleSignUp] err: ', err);
+      setEmailErrorMessage(err.code + ': ' + err.message);
+    }
+  }, [isBackdropOpen, setIsBackdropOpen, userNameValue, emailValue, passwordValue, setIsConfirmCodePopUpOpen, setEmailErrorMessage]);
+
+  const handleCloseButtonClick = useCallback(() => {
+    setIsConfirmCodePopUpOpen(false);
+  }, [setIsConfirmCodePopUpOpen]);
+
+  const handleConfirmButtonClick = useCallback(async () => {
+    setIsBackdropOpen(true);
+    try {
+      const result = await onUserConfirmation({ userNameValue, confirmationCode: confirmCodeValue });
+      console.log('[LoginPage][handleConfirmButtonClick] result: ', result);
+    } catch (err) {
+      console.log('[LoginPage][handleConfirmButtonClick] err: ', err);
+      setHasUsernameError(true);
+      setUsernameErrorMessage(err.code + ': ' + err.message);
+    }
+    setIsBackdropOpen(false);
+    setIsConfirmCodePopUpOpen(false);
+  }, [confirmCodeValue, userNameValue, setIsBackdropOpen, setIsConfirmCodePopUpOpen, setUsernameErrorMessage]);
+
+  const handleResendButtonClick = useCallback(async () => {
+    try {
+      const result = await onResendConfirmationCode(userNameValue);
+      console.log('[LoginPage][handleResendButtonClick] result: ', result);
+    } catch (err) {
+      console.log('[LoginPage][handleResendButtonClick] err: ', err);
+    }
+    setIsConfirmCodePopUpOpen(false);
+  }, [userNameValue, setIsConfirmCodePopUpOpen]);
 
   const handleForgotPassword = useCallback(async() => {
     try {
@@ -148,20 +173,25 @@ const useHooks = () => {
     states: {
       isBackdropOpen,
       isConfirmCodePopUpOpen,
-      emailValue,
+
       hasEmailError,
-      emailErrorMessage,
+      hasUsernameError,
       hasPasswordError,
+
+      emailErrorMessage,
+      usernameErrorMessage,
       passwordErrorMessage,
     },
     handlers: {
       handleSignIn,
       handleSignUp,
+
       onEmailInputChange,
       onPasswordInputChange,
       onConfirmPasswordInputChange,
       onConfirmCodeInputChange,
-      onUserNameInputChange,
+      onUsernameInputChange,
+
       handleCloseButtonClick,
       handleConfirmButtonClick,
       handleResendButtonClick,

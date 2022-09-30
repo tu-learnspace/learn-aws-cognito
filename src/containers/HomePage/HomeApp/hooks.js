@@ -71,11 +71,11 @@ const useHooks = () => {
     try {
       const otpResult = await verifyToken('TOTP');
       console.log('[HomePage][handleCompleteSetUpMFA] otpResult: ', otpResult);
-      // setup complete
+      setIsCompleteOTPSetUpOpen(false);
     } catch (err) {
       console.log('[HomePage][handleCompleteSetUpMFA] err: ', err);
     }
-  }, []);
+  }, [setIsCompleteOTPSetUpOpen]);
 
   return {
     states: {
