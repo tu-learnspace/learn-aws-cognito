@@ -65,12 +65,8 @@ const LoginPage = () => {
                   name="confirmation-code"
                   onChange={onConfirmCodeInputChange}
                 />
-                <Button onClick={handleConfirmButtonClick}>
-                  Confirm
-                </Button>
-                <Button onClick={handleResendButtonClick}>
-                  Resend
-                </Button>
+                <Button onClick={handleConfirmButtonClick}>Confirm</Button>
+                <Button onClick={handleResendButtonClick}>Resend</Button>
               </Flex>
             </div>
           </div>
@@ -82,26 +78,10 @@ const LoginPage = () => {
             spacing="equal"
             justifyContent="flex-start">
             <TabItem title="Sign In">
-              <Button
-                onClick={() => alert('hello')}
-              >
-                {t('signInAmazon')}
-              </Button>
-              <Button
-                onClick={() => alert('hello')}
-              >
-                {t('signInApple')}
-              </Button>
-              <Button
-                onClick={() => alert('hello')}
-              >
-                {t('signInFacebook')}
-              </Button>
-              <Button
-                onClick={() => alert('hello')}
-              >
-                {t('signInGoogle')}
-              </Button>
+              <Button onClick={() => alert('hello')}>{t('signInAmazon')}</Button>
+              <Button onClick={() => alert('hello')}>{t('signInApple')}</Button>
+              <Button onClick={() => alert('hello')}>{t('signInFacebook')}</Button>
+              <Button onClick={() => alert('hello')}>{t('signInGoogle')}</Button>
               - or -
               <div className='TextField'>
                 <TextField
@@ -119,41 +99,14 @@ const LoginPage = () => {
                   onChange={onPasswordInputChange}
                 />
               </div>
-              <Button
-                loadingText="Signing You In..."
-                onClick={handleSignIn}
-                ariaLabel=""
-              >
-                {t('signIn')}
-              </Button>
-              <Button
-                variation="link"
-                onClick={handleForgotPassword}
-              >
-                Forget password
-              </Button>
+              <Button loadingText="Signing You In..." onClick={handleSignIn} ariaLabel="">{t('signIn')}</Button>
+              <Button variation="link" onClick={handleForgotPassword}>Forget password</Button>
             </TabItem>
             <TabItem title="Create account">
-              <Button
-                onClick={() => alert('hello')}
-              >
-                {t('signUpAmazon')}
-              </Button>
-              <Button
-                onClick={() => alert('hello')}
-              >
-                {t('signUpApple')}
-              </Button>
-              <Button
-                onClick={() => alert('hello')}
-              >
-                {t('signUpFacebook')}
-              </Button>
-              <Button
-                onClick={() => alert('hello')}
-              >
-                {t('signUpGoogle')}
-              </Button>
+              <Button onClick={() => alert('hello')}>{t('signUpAmazon')}</Button>
+              <Button onClick={() => alert('hello')}>{t('signUpApple')}</Button>
+              <Button onClick={() => alert('hello')}>{t('signUpFacebook')}</Button>
+              <Button onClick={() => alert('hello')}>{t('signUpGoogle')}</Button>
               - or -
               <div className='TextField'>
                 <TextField
@@ -179,13 +132,7 @@ const LoginPage = () => {
                   onChange={onConfirmPasswordInputChange}
                 />
               </div>
-              <Button
-                loadingText="Signing You Up..."
-                onClick={handleSignUp}
-                ariaLabel=""
-              >
-                {t('signUp')}
-              </Button>
+              <Button loadingText="Signing You Up..." onClick={handleSignUp} ariaLabel="">{t('signUp')}</Button>
             </TabItem>
             <TabItem title="Confirm">
               <Flex direction="column" gap={tokens.space.medium}>
@@ -200,12 +147,8 @@ const LoginPage = () => {
                   name="confirmation-code"
                   onChange={onConfirmCodeInputChange}
                 />
-                <Button onClick={handleConfirmButtonClick}>
-                  Confirm
-                </Button>
-                <Button onClick={handleResendButtonClick}>
-                  Resend
-                </Button>
+                <Button onClick={handleConfirmButtonClick}>Confirm</Button>
+                <Button onClick={handleResendButtonClick}>Resend</Button>
               </Flex>
             </TabItem>
           </Tabs>
