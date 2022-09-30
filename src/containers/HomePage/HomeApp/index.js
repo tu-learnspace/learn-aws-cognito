@@ -6,6 +6,7 @@ import SelectLanguage from 'components/Select';
 
 import './styles/styles.css';
 
+// khung l ha
 const HomeApp = () => {
   const { t } = useTranslation();
 
