@@ -29,6 +29,7 @@ const HomeApp = () => {
     }
   } = useHooks();
 
+
   return (
     <>
       {
@@ -77,7 +78,6 @@ const HomeApp = () => {
                         </>
                       )
                     }
-
                   </Flex>
                 </div>
               )

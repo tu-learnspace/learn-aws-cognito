@@ -31,9 +31,9 @@ export const onLogin = async ({ username, password }) => {
     const verificationCode = prompt('Enter your TOTP token');
     const confirmSignInResult = await Auth.confirmSignIn(result, verificationCode, 'SOFTWARE_TOKEN_MFA');
     console.log('[userManager][onLogin] confirmSignInResult: ', confirmSignInResult);
+    return await getCurrentUser();
   }
-
-  return await getCurrentUser();
+   return null;
 }
 
 export const onSignUp = async ({ emailValue, passwordValue }) => {

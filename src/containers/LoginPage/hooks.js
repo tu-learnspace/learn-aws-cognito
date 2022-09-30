@@ -27,8 +27,10 @@ const useHooks = () => {
       const result = await onLogin({ username: emailValue, password: passwordValue });
       console.log('[LoginPage][handleSignIn] result: ', result);
       setIsBackdropOpen(false);
-      const newUrl = new URL(window.location.href); // TODO: why I cant history.push here?
-      window.location.assign(newUrl.origin);
+      if (result) {
+        const newUrl = new URL(window.location.href); // TODO: why I cant history.push here?
+        window.location.assign(newUrl.origin);
+      }
     } catch (err) {
       if (err.code === "UserNotConfirmedException") {
         setIsConfirmCodePopUpOpen(true);

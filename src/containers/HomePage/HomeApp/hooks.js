@@ -55,13 +55,11 @@ const useHooks = () => {
   const handleMFAClick = useCallback(async () => {
     const result = await checkMFAStatus();
     console.log('[HomePage][handleMFAClick] result: ', result);
-    if (result === 'NOMFA') { // no multi-factor auth
-      setIsMFAPopUpOpen(true);
-    }
-    else {
+    if (result === 'SOFTWARE_TOKEN_MFA' ) { // else result === 'NOMFA: no multi-factor auth
       setHasMFA(true);
     }
-  }, [setIsMFAPopUpOpen]);
+    setIsMFAPopUpOpen(true);
+  }, [setIsMFAPopUpOpen, setHasMFA]);
 
   const handleSetUpMFA = useCallback(async () => {
     const { code, url } = await setUpOTP();

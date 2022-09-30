@@ -8,13 +8,14 @@ const useHooks = () => {
 
   const getHeaderName = useCallback(() => {
     const path = pathname.split('/');
-    const arrayFilter = authRoutes.filter((route) => route.path.startsWith('/' + path[1]));
+    const arrayFilter = authRoutes.filter((route) => {
+      return route.path.startsWith('/' + path[1])
+    });
 
     if (arrayFilter.length > 0) {
       setHeaderName(arrayFilter[0].name);
       setCurrentPath(arrayFilter[0].path);
     }
-
   }, [setHeaderName, setCurrentPath, pathname]);
 
   useEffect(() => {
