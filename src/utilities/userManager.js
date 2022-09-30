@@ -88,48 +88,26 @@ export const onSignOut = async () => {
   });
 }
 
-// export const checkMFAStatus = async () => {
-//   const result = await Auth.getPreferredMFA(await getCurrentUser());
-//   displayObject(result)
-//
-//   if (result === 'NOMFA') { // no multi-factor auth
-//     Swal.fire({
-//       title: 'MFA Not Set',
-//       text: "Do you want to setup MFA?",
-//       showCancelButton: true,
-//       confirmButtonColor: '#3085d6',
-//       cancelButtonColor: '#d33',
-//       confirmButtonText: 'Yes'
-//     }).then((result) => {
-//       if (result.value) {
-//         Auth.setupTOTP(user).then((code) => {
-//           var qrData = `otpauth://totp/Globomantics Shop(${user.getUsername()})?secret=${code}`
-//           var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + encodeURI(qrData) + '&amp;size=300x300';
-//           Swal.fire({
-//             title: 'Scan this using your authenticator app',
-//             html: `<img src='${url}'/>
-//               <p>${code}</p>
-//               `,
-//             showCancelButton: true,
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             confirmButtonText: 'Complete Setup'
-//           }).then(result => {
-//             if (result.value) {
-//               var verificationCode = prompt('Enter topt token, from your authenticator app');
-//               Auth.verifyTotpToken(user, verificationCode).then(() => {
-//                 Auth.setPreferredMFA(user, 'TOTP').then(otpResult => {
-//                   displayObject(otpResult)
-//                 })
-//                 .catch(err => displayObject(err))
-//
-//               }).catch(e => {
-//                 displayObject(e)
-//               });
-//             }
-//           })
-//         });
-//       }
-//     })
-//   }
-// }
+export const checkMFAStatus = async () => {
+  return await Auth.getPreferredMFA(await getCurrentUser());
+}
+
+export const setUpOTP = async () => {
+  const user = await getCurrentUser();
+  const code = await Auth.setupTOTP(user);
+
+  const qrData = `otpauth://totp/Lam Xinh Dep (${user.getUsername()})?secret=${code}`;
+  const url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + encodeURI(qrData) + '&amp;size=300x300';
+
+  return {
+    code,
+    url
+  };
+}
+
+export const verifyToken = async (type) => {
+  const user = await getCurrentUser();
+  const verificationCode = prompt(`Enter ${type} token, from your authenticator app`);
+  await Auth.verifyTotpToken(user, verificationCode);
+  return await Auth.setPreferredMFA(user, type);
+}

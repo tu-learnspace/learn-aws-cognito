@@ -13,26 +13,89 @@ const HomeApp = () => {
     states: {
       userDetails,
       isSettingsPopUpOpen,
+      isMFAPopUpOpen,
+      shouldShowUserInfo,
+      isCompleteOTPSetUpOpen,
+      qRCodeInfo,
+      hasMFA,
     },
     handlers: {
       handleSettingsButtonClick,
       handleCloseButtonClick,
+      handleMFAClick,
+      handledAttributesButtonClick,
+      handleSetUpMFA,
+      handleCompleteSetUpMFA,
     }
   } = useHooks();
 
   return (
     <>
       {
+        isMFAPopUpOpen && (
+          <div className='Backdrop-MFA'>
+            {
+              isCompleteOTPSetUpOpen ? (
+                <div className='OTP'>
+                  <Flex direction="column" gap={tokens.space.medium}>
+                    <div className='OTP-Info'>
+                      <Heading className='OTP-Info-Item' level={3}>Scan this using your authentication app</Heading>
+                      <img className='OTP-Info-Item' src={`${qRCodeInfo.url}`} alt='QR Code' width="300" height="300"/>
+                      <p className='OTP-Info-Item'>Code: ${qRCodeInfo.code}</p>
+                    </div>
+                    <div className='MFA-Button'>
+                      <Button onClick={handleCompleteSetUpMFA}>
+                        Complete Setup
+                      </Button>
+                      <Button className='MFA-Button-Cancel' onClick={() => {handleCloseButtonClick('OTP')}}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </Flex>
+                </div>
+              ) : (
+                <div className='MFA'>
+                  <Flex direction="column" gap={tokens.space.medium}>
+                    {
+                      hasMFA ? (
+                        <>
+                          <Button className='CloseButton' onClick={() => {handleCloseButtonClick('MFA')}}>x</Button>
+                          <Heading level={3}>MFA Has Already Been Set</Heading>
+                        </>
+                      ) : (
+                        <>
+                          <Heading level={3}>MFA Not Set</Heading>
+                          <Heading level={4}>Do you want to setup MFA?</Heading>
+                          <div className='MFA-Button'>
+                            <Button onClick={handleSetUpMFA}>
+                              Yes
+                            </Button>
+                            <Button className='MFA-Button-Cancel' onClick={() => {handleCloseButtonClick('MFA')}}>
+                              Cancel
+                            </Button>
+                          </div>
+                        </>
+                      )
+                    }
+
+                  </Flex>
+                </div>
+              )
+            }
+          </div>
+        )
+      }
+      {
         isSettingsPopUpOpen && (
           <div className='Backdrop'>
             <div className='Settings'>
               <Flex direction="column" gap={tokens.space.medium}>
-                <Button className='Settings-CloseButton' onClick={handleCloseButtonClick}>x</Button>
+                <Button className='Settings-CloseButton' onClick={() => {handleCloseButtonClick('Settings')}}>x</Button>
                 <Heading level={3}>Settings</Heading>
                 __________________________________________
                 <Heading level={4}>User Attributes</Heading>
                 __________________________________________
-                <Button className='Settings-Button' variation="link">
+                <Button className='Settings-Button' variation="link" onClick={handledAttributesButtonClick}>
                   View Attributes
                 </Button>
                 <Button className='Settings-Button' variation="link">
@@ -41,15 +104,17 @@ const HomeApp = () => {
                 <Button className='Settings-Button' variation="link">
                   Update/Set Phone Number
                 </Button>
+                __________________________________________
                 <Heading level={4}>Multi-factor authentication</Heading>
                 __________________________________________
-                <Button className='Settings-Button' variation="link">
+                <Button className='Settings-Button' onClick={handleMFAClick} variation="link">
                   MFA Status
                 </Button>
                 __________________________________________
                 <Button className='Settings-Button' variation="link">
                   Change password
                 </Button>
+                {shouldShowUserInfo && JSON.stringify(userDetails)}
               </Flex>
             </div>
           </div>
@@ -66,7 +131,6 @@ const HomeApp = () => {
           </Button>
         </div>
         <header className='App-header'>
-          {JSON.stringify(userDetails)}
           <SvgIcon name='logo' className="App-logo"/>
           <p> {t('greeting')} </p>
           <a

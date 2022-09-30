@@ -78,3 +78,55 @@
   width: 43px;
   margin-bottom: 10px;
 }
+
+.Backdrop-MFA {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.67);
+  z-index: 1000;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.MFA {
+  background: #ffffff;
+  z-index: 1001;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.MFA-Button {
+  justify-content: left;
+}
+
+.MFA-Button-Cancel {
+  background-color: #9684b9;
+  color: #ffffff;
+  margin: 15px;
+}
+
+.OTP {
+  background: #ffffff;
+  z-index: 1002;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.OTP-Info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.OTP-Info-Item {
+  margin: 10px;
+}

@@ -27,18 +27,16 @@ const useHooks = () => {
       const result = await onLogin({ username: emailValue, password: passwordValue });
       console.log('[LoginPage][handleSignIn] result: ', result);
       setIsBackdropOpen(false);
-      // TODO: why I cant history.push here?
-      const newUrl = new URL(window.location.href);
+      const newUrl = new URL(window.location.href); // TODO: why I cant history.push here?
       window.location.assign(newUrl.origin);
     } catch (err) {
       if (err.code === "UserNotConfirmedException") {
-        setIsConfirmCodePopUpOpen(true); //toggleModal('confirm', true)
-      } else if (err.code === 'NotAuthorizedException') {
-        setIsBackdropOpen(false);
-        setHasEmailError(true);
-        setEmailErrorMessage('Wrong password or username.');
+        setIsConfirmCodePopUpOpen(true);
       } else {
         console.log('[LoginPage][handleSignIn] err: ', err);
+        setIsBackdropOpen(false);
+        setHasEmailError(true);
+        setEmailErrorMessage(err.code + ': ' + err.message);
       }
     }
   }, [setIsBackdropOpen, emailValue, passwordValue, setHasEmailError, setEmailErrorMessage]);
@@ -49,12 +47,18 @@ const useHooks = () => {
   }, []);
 
   const handleSignUp = useCallback( async() => {
-    setIsBackdropOpen(!isBackdropOpen);
-    const result = await onSignUp({ emailValue, passwordValue });
-    console.log('[LoginPage][handleSignUp] result: ', result);
-    setIsBackdropOpen(false);
-    if (!result.userConfirmed) {
-      setIsConfirmCodePopUpOpen(true);
+    try {
+      setIsBackdropOpen(!isBackdropOpen);
+      const result = await onSignUp({ emailValue, passwordValue });
+      console.log('[LoginPage][handleSignUp] result: ', result);
+      setIsBackdropOpen(false);
+      if (!result.userConfirmed) {
+        setIsConfirmCodePopUpOpen(true);
+      }
+    } catch (err) {
+      setIsBackdropOpen(false);
+      console.log('[LoginPage][handleSignUp] err: ', err);
+      setEmailErrorMessage(err.code + ': ' + err.message);
     }
   }, [isBackdropOpen, setIsBackdropOpen, emailValue, passwordValue]);
 
@@ -98,8 +102,7 @@ const useHooks = () => {
   const onPasswordInputChange = useCallback((event) => {
     event.persist();
     setPasswordValue(event.target.value);
-    // TODO: why I cant use passwordValue instead of event.target.value
-    if (event.target.value !== confirmPasswordValue) {
+    if (event.target.value !== confirmPasswordValue) {     // TODO: why I cant use passwordValue after setPasswordValue (instead of event.target.value)
       setHasPasswordError(true);
       setPasswordErrorMessage('Confirm password is unmatched.');
     } else {
