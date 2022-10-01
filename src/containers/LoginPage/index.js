@@ -43,6 +43,8 @@ const LoginPage = () => {
       handleConfirmButtonClick,
       handleResendButtonClick,
       handleForgotPassword,
+      handleGoogleSignIn,
+      handleHostedUISignIn,
     }
   } = useHooks();
 
@@ -80,10 +82,11 @@ const LoginPage = () => {
             spacing="equal"
             justifyContent="flex-start">
             <TabItem title="Sign In">
-              <Button onClick={() => alert('hello')}>{t('signInAmazon')}</Button>
-              <Button onClick={() => alert('hello')}>{t('signInApple')}</Button>
-              <Button onClick={() => alert('hello')}>{t('signInFacebook')}</Button>
-              <Button onClick={() => alert('hello')}>{t('signInGoogle')}</Button>
+              <Button>{t('signInAmazon')}</Button>
+              <Button>{t('signInApple')}</Button>
+              <Button>{t('signInFacebook')}</Button>
+              <Button onClick={handleGoogleSignIn}>{t('signInGoogle')}</Button>
+              <Button onClick={handleHostedUISignIn}>{t('signInHostedUI')}</Button>
               - or -
               <div className='TextField'>
                 <TextField
@@ -105,10 +108,10 @@ const LoginPage = () => {
               <Button variation="link" onClick={handleForgotPassword}>Forget password</Button>
             </TabItem>
             <TabItem title="Create account">
-              <Button onClick={() => alert('hello')}>{t('signUpAmazon')}</Button>
-              <Button onClick={() => alert('hello')}>{t('signUpApple')}</Button>
-              <Button onClick={() => alert('hello')}>{t('signUpFacebook')}</Button>
-              <Button onClick={() => alert('hello')}>{t('signUpGoogle')}</Button>
+              <Button>{t('signUpAmazon')}</Button>
+              <Button>{t('signUpApple')}</Button>
+              <Button>{t('signUpFacebook')}</Button>
+              <Button>{t('signUpGoogle')}</Button>
               - or -
               <div className='TextField'>
                 <TextField

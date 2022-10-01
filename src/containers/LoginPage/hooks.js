@@ -5,6 +5,8 @@ import {
   onSignUp,
   onUserConfirmation,
   onForgotPassword,
+  onGoogleSignIn,
+  onHostedUISignIn,
 } from 'utilities/userManager';
 import { deleteAllItems } from 'utilities/storageManager';
 
@@ -169,6 +171,14 @@ const useHooks = () => {
     }
   }, []);
 
+  const handleGoogleSignIn = useCallback(async () => {
+    await onGoogleSignIn();
+  }, []);
+
+  const handleHostedUISignIn = useCallback(async () => {
+    await onHostedUISignIn();
+  }, []);
+
   return {
     states: {
       isBackdropOpen,
@@ -195,7 +205,9 @@ const useHooks = () => {
       handleCloseButtonClick,
       handleConfirmButtonClick,
       handleResendButtonClick,
-      handleForgotPassword
+      handleForgotPassword,
+      handleGoogleSignIn,
+      handleHostedUISignIn,
     }
   };
 };

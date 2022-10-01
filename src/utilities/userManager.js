@@ -3,20 +3,20 @@ import appConfig from 'appConfig';
 
 
 Auth.configure({
-  // (optional) - Amazon Cognito User Pool ID
+  // Amazon Cognito User Pool ID
   userPoolId: appConfig.userPoolId,
-  // (optional) - Amazon Cognito Web Client ID (26-char alphanumeric string, App client secret needs to be disabled)
+  // Amazon Cognito Web Client ID (26-char alphanumeric string, App client secret needs to be disabled)
   // read more: https://github.com/aws-amplify/amplify-js/issues/3455
   userPoolWebClientId: appConfig.clientId,
-  // (optional) - Hosted UI configuration
-  // oauth: {
-  //   region: 'us-east-1',
-  //   domain: 'globomanticscongnito.auth.us-east-1.amazoncognito.com',
-  //   scope: ['email', 'openid', 'aws.cognito.signin.user.admin'],
-  //   redirectSignIn: 'https://127.0.0.1:8080',
-  //   redirectSignOut: 'https://127.0.0.1:8080',
-  //   responseType: 'code' // or 'token', note that REFRESH token will only be generated when the responseType is code
-  // }
+  // Hosted UI configuration
+  oauth: {
+    region: 'ap-south-1',
+    domain: 'lamkhung.auth.ap-south-1.amazoncognito.com',
+    scope: ['email', 'openid', 'aws.cognito.signin.user.admin'],
+    redirectSignIn: 'http://localhost:3000/home',
+    redirectSignOut: 'http://localhost:3000/home',
+    responseType: 'code' // or 'token', note that REFRESH token will only be generated when the responseType is code
+  }
 });
 
 export async function getCurrentUser() {
@@ -106,4 +106,14 @@ export const verifyToken = async (type) => {
   const verificationCode = prompt(`Enter ${type} token, from your authenticator app`);
   await Auth.verifyTotpToken(user, verificationCode);
   return await Auth.setPreferredMFA(user, type);
+}
+
+export const onGoogleSignIn = async () => {
+  return await Auth.federatedSignIn({
+    provider: "Google"
+  });
+}
+
+export const onHostedUISignIn = async () => {
+  return await Auth.federatedSignIn();
 }

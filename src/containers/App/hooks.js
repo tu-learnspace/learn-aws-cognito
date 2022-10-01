@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import useActions from 'hooks/useActions';
 import { getCurrentUser } from 'utilities/userManager';
-
 import { actions } from './slice';
 
 const useHooks = () => {

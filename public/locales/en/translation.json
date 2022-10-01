@@ -10,6 +10,7 @@
   "signInApple": "Sign In with Apple",
   "signInFacebook": "Sign In with Facebook",
   "signInGoogle": "Sign In with Google",
+  "signInHostedUI": "Sign In with Cognito hosted UI",
   "signUp": "Sign Up",
   "signUpAmazon": "Sign Up with Amazon",
   "signUpApple": "Sign Up with Apple",
