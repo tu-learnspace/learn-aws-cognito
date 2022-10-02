@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Hub } from 'aws-amplify';
 import useActions from 'hooks/useActions';
 import { getCurrentUser } from 'utilities/userManager';
 import { actions } from './slice';
@@ -22,6 +23,22 @@ const useHooks = () => {
 
     initializeUser();
   }, [storeUser]);
+
+  useEffect(() => {
+    Hub.listen("auth", ({ payload: { event, data } }) => {
+      switch (event) {
+        case "signIn":
+          console.log('HUB nghe roi ne');
+          break;
+        case "signOut":
+          break;
+        case "customOAuthState":
+          alert('custom state');
+          break;
+        default:
+      }
+    });
+  }, []);
 };
 
 export default useHooks;

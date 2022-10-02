@@ -114,6 +114,12 @@ export const onGoogleSignIn = async () => {
   });
 }
 
+export const onFacebookSignIn = async () => {
+  return await Auth.federatedSignIn({
+    provider: "Facebook"
+  });
+}
+
 export const onHostedUISignIn = async () => {
   return await Auth.federatedSignIn();
 }

@@ -18,7 +18,6 @@ const useAuthenticated = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      // redirect login
       history.push('/login');
     }
   }, [isAuthenticated, history]);

@@ -44,6 +44,7 @@ const LoginPage = () => {
       handleResendButtonClick,
       handleForgotPassword,
       handleGoogleSignIn,
+      handleFacebookSignIn,
       handleHostedUISignIn,
     }
   } = useHooks();
@@ -84,7 +85,7 @@ const LoginPage = () => {
             <TabItem title="Sign In">
               <Button>{t('signInAmazon')}</Button>
               <Button>{t('signInApple')}</Button>
-              <Button>{t('signInFacebook')}</Button>
+              <Button onClick={handleFacebookSignIn}>{t('signInFacebook')}</Button>
               <Button onClick={handleGoogleSignIn}>{t('signInGoogle')}</Button>
               <Button onClick={handleHostedUISignIn}>{t('signInHostedUI')}</Button>
               - or -

@@ -22,9 +22,9 @@ const App = () => {
     <Suspense fallback={<div>Loading...</div>}>
       <BrowserRouter>
         <Switch>
+          <Route component={AppLayout}/>
           <Route exact path='/login' component={LoginPage}/>
           <Route exact path='/unauthorized' component={Unauthorized}/>
-          <Route component={AppLayout}/>
         </Switch>
       </BrowserRouter>
     </Suspense>

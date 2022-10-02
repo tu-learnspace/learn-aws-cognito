@@ -6,6 +6,7 @@ import {
   onUserConfirmation,
   onForgotPassword,
   onGoogleSignIn,
+  onFacebookSignIn,
   onHostedUISignIn,
 } from 'utilities/userManager';
 import { deleteAllItems } from 'utilities/storageManager';
@@ -130,9 +131,10 @@ const useHooks = () => {
     } catch (err) {
       setIsBackdropOpen(false);
       console.log('[LoginPage][handleSignUp] err: ', err);
-      setEmailErrorMessage(err.code + ': ' + err.message);
+      setHasUsernameError(true);
+      setUsernameErrorMessage(err.code + ': ' + err.message);
     }
-  }, [isBackdropOpen, setIsBackdropOpen, userNameValue, emailValue, passwordValue, setIsConfirmCodePopUpOpen, setEmailErrorMessage]);
+  }, [isBackdropOpen, setIsBackdropOpen, userNameValue, emailValue, passwordValue, setIsConfirmCodePopUpOpen, setHasUsernameError, setUsernameErrorMessage]);
 
   const handleCloseButtonClick = useCallback(() => {
     setIsConfirmCodePopUpOpen(false);
@@ -175,6 +177,11 @@ const useHooks = () => {
     await onGoogleSignIn();
   }, []);
 
+  const handleFacebookSignIn = useCallback(async () => {
+    await onFacebookSignIn();
+  }, []);
+
+
   const handleHostedUISignIn = useCallback(async () => {
     await onHostedUISignIn();
   }, []);
@@ -207,6 +214,7 @@ const useHooks = () => {
       handleResendButtonClick,
       handleForgotPassword,
       handleGoogleSignIn,
+      handleFacebookSignIn,
       handleHostedUISignIn,
     }
   };
