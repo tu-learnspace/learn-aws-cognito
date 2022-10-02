@@ -5,6 +5,7 @@ import { useInjectReducer, useInjectSaga } from 'utilities/redux-injectors';
 import Unauthorized from 'containers/Unauthorized';
 import LoginPage from 'containers/LoginPage';
 import AppLayout from 'containers/AppLayout';
+import PublicPage from 'containers/PublicPage';
 
 import { reducer, sliceKey } from './slice';
 import useHooks from './hooks';
@@ -24,6 +25,7 @@ const App = () => {
         <Switch>
           <Route exact path='/login' component={LoginPage}/>
           <Route exact path='/unauthorized' component={Unauthorized}/>
+          <Route exact path='/public' component={PublicPage}/>
           <Route component={AppLayout}/>
         </Switch>
       </BrowserRouter>
