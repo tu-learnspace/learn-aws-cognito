@@ -38,6 +38,7 @@ const useHooks = () => {
         default:
       }
     });
+    console.log(`You are running this application in ${process.env.NODE_ENV}`);
   }, []);
 };
 
