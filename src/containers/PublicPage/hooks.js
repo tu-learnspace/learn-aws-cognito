@@ -6,12 +6,7 @@ const useHooks = () => {
 
   useEffect(() => {
     const loadProducts = async () => {
-      let headers = {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-      };
+      let headers = {};
       const authToken = (await Auth.currentSession()).getAccessToken().getJwtToken();
       console.log('[PublicPage][loadProducts] authToken: ', authToken);
       if (authToken) {
@@ -19,7 +14,7 @@ const useHooks = () => {
       }
 
       try {
-        const response = await fetch('https://wmovsdgspc.execute-api.ap-south-1.amazonaws.com/dev', {
+        const response = await fetch('https://wmovsdgspc.execute-api.ap-south-1.amazonaws.com/dev/pets', {
           headers,
         });
         // const response = await fetch('https://54tcqd60xa.execute-api.us-east-1.amazonaws.com/dev');

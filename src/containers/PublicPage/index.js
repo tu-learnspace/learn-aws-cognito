@@ -13,7 +13,9 @@ const PublicPage = () => {
       <div className='Products'>
         Products Info:
       </div>
-      {JSON.stringify(products)}
+      <div className='Products-Details'>
+        {JSON.stringify(products)}
+      </div>
     </>
   );
 };
