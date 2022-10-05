@@ -12,7 +12,7 @@ Auth.configure({
   oauth: {
     region: 'ap-south-1',
     domain: 'lamkhung.auth.ap-south-1.amazoncognito.com',
-    scope: ['email', 'openid', 'aws.cognito.signin.user.admin'],
+    scope: ['email', 'openid', 'aws.cognito.signin.user.admin', 'tusapi.com/products.read'],
     redirectSignIn: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/home' : 'https://main.d1lm1wsggdna8l.amplifyapp.com/home',
     redirectSignOut: process.env.NODE_ENV === 'development' ? 'http://localhost:3000/home' : 'https://main.d1lm1wsggdna8l.amplifyapp.com/home',
     responseType: 'code' // or 'token', note that REFRESH token will only be generated when the responseType is code

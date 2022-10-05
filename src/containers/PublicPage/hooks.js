@@ -6,21 +6,19 @@ const useHooks = () => {
 
   useEffect(() => {
     const loadProducts = async () => {
-      let headers = {};
-      const authToken = (await Auth.currentSession()).getAccessToken().getJwtToken();
-      console.log('[PublicPage][loadProducts] authToken: ', authToken);
-      if (authToken) {
-        headers['Authorization'] = `Bearer ${authToken}`;
-      }
-
       try {
+        let headers = {};
+        const authToken = (await Auth.currentSession()).getAccessToken().getJwtToken();
+        console.log('[PublicPage][loadProducts] authToken: ', authToken);
+        if (authToken) {
+          headers['Authorization'] = `Bearer ${authToken}`;
+        }
+
         const response = await fetch('https://wmovsdgspc.execute-api.ap-south-1.amazonaws.com/dev/pets', {
           headers,
         });
-        // const response = await fetch('https://54tcqd60xa.execute-api.us-east-1.amazonaws.com/dev');
-        const products = await response.json();
-        console.log(products);
-        setProducts(products);
+        const res = await response.json();
+        setProducts(res);
       } catch (err) {
         console.log('[PublicPage][loadProducts] err: ', err);
       }

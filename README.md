@@ -1,4 +1,4 @@
-https://main.d1lm1wsggdna8l.amplifyapp.com/
+https://main.d1lm1wsggdna8l.amplifyapp.com
 
 ---
 # Getting Started with Create React App
