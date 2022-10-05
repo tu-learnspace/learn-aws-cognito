@@ -5,10 +5,9 @@ import appConfig from 'appConfig';
 Auth.configure({
   // Amazon Cognito User Pool ID
   userPoolId: appConfig.userPoolId,
-  // Amazon Cognito Web Client ID (26-char alphanumeric string, App client secret needs to be disabled)
-  // read more: https://github.com/aws-amplify/amplify-js/issues/3455
+  // Amazon Cognito Web Client ID (26-char alphanumeric string, App client secret needs to be disabled). Read more: https://github.com/aws-amplify/amplify-js/issues/3455
   userPoolWebClientId: appConfig.clientId,
-  // Hosted UI configuration
+  // (optional) Hosted UI configuration
   oauth: {
     region: 'ap-south-1',
     domain: 'lamkhung.auth.ap-south-1.amazoncognito.com',
